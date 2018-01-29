@@ -102,6 +102,25 @@ class Vouchers(VoucherifyRequest):
             method='POST'
         )
 
+    def validate(self, code, tracking_id=None):
+        context = {}
+
+        if code and isinstance(code, dict):
+            context = code
+            code = context['voucher']
+            del context['voucher']
+
+        path = '/vouchers/' + quote(code) + '/validate'
+
+        if tracking_id:
+            path = path + '?' + urlencode({'tracking_id': tracking_id})
+
+        return self.request(
+            path,
+            method='POST',
+            data=json.dumps(context),
+        )
+
 
 class Redemptions(VoucherifyRequest):
     def __init__(self, *args, **kwargs):
