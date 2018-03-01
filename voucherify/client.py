@@ -102,6 +102,25 @@ class Vouchers(VoucherifyRequest):
             method='POST'
         )
 
+    def validate(self, code, tracking_id=None):
+        context = {}
+
+        if code and isinstance(code, dict):
+            context = code
+            code = context['voucher']
+            del context['voucher']
+
+        path = '/vouchers/' + quote(code) + '/validate'
+
+        if tracking_id:
+            path = path + '?' + urlencode({'tracking_id': tracking_id})
+
+        return self.request(
+            path,
+            method='POST',
+            data=json.dumps(context),
+        )
+
 
 class Redemptions(VoucherifyRequest):
     def __init__(self, *args, **kwargs):
@@ -205,6 +224,51 @@ class Customers(VoucherifyRequest):
         )
 
 
+class Campaigns(VoucherifyRequest):
+    def __init__(self, *args, **kwargs):
+        super(Campaigns, self).__init__(*args, **kwargs)
+
+    def list(self, query):
+        path = '/campaigns/'
+
+        return self.request(
+            path,
+            params=query
+        )
+
+    def get(self, name):
+        path = '/campaigns/' + quote(name)
+
+        return self.request(
+            path
+        )
+
+    def create(self, campaign):
+        path = '/campaigns/'
+
+        return self.request(
+            path,
+            data=json.dumps(campaign),
+            method='POST'
+        )
+        
+    def update(self, campaign_update):
+        path = '/campaigns/' + quote(campaign_update.get("name"))
+
+        return self.request(
+            path,
+            data=json.dumps(campaign_update),
+            method='PUT'
+        )
+
+    def delete(self, name):
+        path = '/ccampaigns/' + quote(name)
+
+        return self.request(
+            path,
+            method='DELETE'
+        )
+
 class Client(VoucherifyRequest):
     def __init__(self, *args, **kwargs):
         super(Client, self).__init__(*args, **kwargs)
@@ -212,6 +276,7 @@ class Client(VoucherifyRequest):
         self.vouchers = Vouchers(*args, **kwargs)
         self.redemptions = Redemptions(*args, **kwargs)
         self.distributions = Distributions(*args, **kwargs)
+        self.campaigns = Campaigns(*args, **kwargs)
 
 
 class VoucherifyError(Exception):

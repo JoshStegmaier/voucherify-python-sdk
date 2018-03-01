@@ -23,7 +23,7 @@ def calculate_price(base_price, voucher, unit_price):
     e = 100
     
     if 'gift' in voucher and voucher['gift'] is not None:
-        discount = min(voucher['gift']['balance'] / e, base_price)
+        discount = min(voucher['gift']['balance'], base_price)
         return round_money(base_price - discount)       
     
     if 'discount' not in voucher:
@@ -36,7 +36,7 @@ def calculate_price(base_price, voucher, unit_price):
         return round_money(base_price - price_discount)
 
     elif voucher['discount']['type'] == 'AMOUNT':
-        discount = voucher['discount']['amount_off'] / e
+        discount = voucher['discount']['amount_off']
         validate_amount_discount(discount)
         new_price = base_price - discount
         return round_money(new_price if new_price > 0 else 0)
@@ -55,7 +55,7 @@ def calculate_discount(base_price, voucher, unit_price):
     e = 100
     
     if 'gift' in voucher and voucher['gift'] is not None: 
-        discount = min(voucher['gift']['balance'] / e, base_price)
+        discount = min(voucher['gift']['balance'], base_price)
         return round_money(discount)
     
     if 'discount' not in voucher:
@@ -67,7 +67,7 @@ def calculate_discount(base_price, voucher, unit_price):
         return round_money(base_price * (discount / 100))
 
     elif voucher['discount']['type'] == 'AMOUNT':
-        discount = voucher['discount']['amount_off'] / e
+        discount = voucher['discount']['amount_off']
         validate_amount_discount(discount)
         new_price = base_price - discount
         return round_money(discount if new_price > 0 else base_price)
