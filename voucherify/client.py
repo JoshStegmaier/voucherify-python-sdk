@@ -262,7 +262,99 @@ class Campaigns(VoucherifyRequest):
         )
 
     def delete(self, name):
-        path = '/ccampaigns/' + quote(name)
+        path = '/campaigns/' + quote(name)
+
+        return self.request(
+            path,
+            method='DELETE'
+        )
+
+    def add_voucher(self, name, voucher):
+        path = '/campaigns/' + quote(name) + '/vouchers/'
+
+        return self.request(
+            path,
+            data=json.dumps(voucher),
+            method='POST'
+        )
+
+
+class Products(VoucherifyRequest):
+    def __init__(self, *args, **kwargs):
+        super(Products, self).__init__(*args, **kwargs)
+
+    def list(self, query):
+        path = '/products/'
+
+        return self.request(
+            path,
+            params=query
+        )
+
+    def get(self, name):
+        path = '/products/' + quote(name)
+
+        return self.request(
+            path
+        )
+
+    def create(self, product):
+        path = '/products/'
+
+        return self.request(
+            path,
+            data=json.dumps(product),
+            method='POST'
+        )
+        
+    def update(self, product_update):
+        path = '/products/' + quote(product_update.get("id"))
+
+        return self.request(
+            path,
+            data=json.dumps(product_update),
+            method='PUT'
+        )
+
+    def delete(self, name):
+        path = '/products/' + quote(name)
+
+        return self.request(
+            path,
+            method='DELETE'
+        )
+
+class ValidationRules(VoucherifyRequest):
+    def __init__(self, *args, **kwargs):
+        super(ValidationRules, self).__init__(*args, **kwargs)
+
+    def get(self, name):
+        path = '/validation-rules/' + quote(name)
+
+        return self.request(
+            path
+        )
+
+    def create(self, validation_rule):
+        path = '/validation-rules/'
+
+        return self.request(
+            path,
+            data=json.dumps(validation_rule),
+            method='POST'
+        )
+        
+    def update(self, validation_rule_update):
+        path = '/validation-rules/' + quote(validation_rule_update_update.get("id"))
+
+        return self.request(
+            path,
+            data=json.dumps(validation_rule_update),
+            method='PUT'
+        )
+
+    def delete(self, name):
+        path = '/validation-rules/' + quote(name)
 
         return self.request(
             path,
@@ -277,6 +369,8 @@ class Client(VoucherifyRequest):
         self.redemptions = Redemptions(*args, **kwargs)
         self.distributions = Distributions(*args, **kwargs)
         self.campaigns = Campaigns(*args, **kwargs)
+        self.products = Products(*args, **kwargs)
+        self.validation_rules = ValidationRules(*args, **kwargs)
 
 
 class VoucherifyError(Exception):
