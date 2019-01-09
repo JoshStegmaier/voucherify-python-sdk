@@ -361,6 +361,23 @@ class ValidationRules(VoucherifyRequest):
             method='DELETE'
         )
 
+    def create_assignment(self, name, assignment):
+        path = '/validation-rules/' + quote(name) + '/assignments'
+
+        return self.request(
+            path,
+            data=json.dumps(assignment),
+            method='POST'
+        )
+
+    def delete_assignment(self, name, assignment_id):
+        path = '/validation-rules/' + quote(name) + '/assignments/' + quote(assignment_id)
+
+        return self.request(
+            path,
+            method='DELETE'
+        )
+
 class Client(VoucherifyRequest):
     def __init__(self, *args, **kwargs):
         super(Client, self).__init__(*args, **kwargs)
