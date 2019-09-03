@@ -2,7 +2,7 @@
   <img src="./voucherify-python-sdk.png" />
 </p>
 
-<h3 align="center">Official <a href="http://voucherify.io?utm_source=github&utm_medium=sdk&utm_campaign=acq">Voucherify</a> SDK for Python</h3>
+<h3 align="center">Official <a href="https://voucherify.io?utm_source=github&utm_medium=sdk&utm_campaign=acq">Voucherify</a> SDK for Python</h3>
 
 <p align="center">
 <b><a href="#setup">Setup</a></b>
@@ -32,7 +32,7 @@ API:
 
 `pip install 'Voucherify'`
 
-[Log-in](http://app.voucherify.io/?utm_source=github&utm_medium=sdk&utm_campaign=acq#/login) to Voucherify web interface and obtain your Application Keys from [Configuration](https://app.voucherify.io/?utm_source=github&utm_medium=sdk&utm_campaign=acq#/app/configuration):
+[Log-in](https://app.voucherify.io/?utm_source=github&utm_medium=sdk&utm_campaign=acq#/login) to Voucherify web interface and obtain your Application Keys from [Configuration](https://app.voucherify.io/?utm_source=github&utm_medium=sdk&utm_campaign=acq#/app/configuration):
 
 ```python
 from voucherify import Client as voucherifyClient
@@ -40,6 +40,20 @@ from voucherify import Client as voucherifyClient
 client = voucherifyClient(
     application_id='YOUR-APPLICATION-ID',
     client_secret_key='YOUR-CLIENT-SECRET-KEY'
+)
+```
+
+### API Endpoint
+
+Optionally, you can add `api_endpoint` to the client options if you want to use Voucherify running in a specific region.
+
+```python
+from voucherify import Client as voucherifyClient
+
+client = voucherifyClient(
+    application_id='YOUR-APPLICATION-ID',
+    client_secret_key='YOUR-CLIENT-SECRET-KEY',
+    api_endpoint='https://<region>.api.voucherify.io'
 )
 ```
 
@@ -105,7 +119,6 @@ client.distributions.publish(params)
 Methods are provided within `client.redemptions.*` namespace.
 
 - [Redeem Voucher](#redeem-voucher)
-- [Redeem Promotion's Tier](#redeem-promotions-tier)
 - [List Redemptions](#list-redemptions)
 - [Get Voucher's Redemptions](#get-vouchers-redemptions)
 - [Rollback Redemption](#rollback-redemption)
@@ -180,6 +193,7 @@ Bug reports and pull requests are welcome through [GitHub Issues](https://github
 
 ## Changelog
 
+- **2019-06-19** - `2.1.0` Added support for custom API endpoint, that allows to connect to projects created in specific Voucherify region.
 - **2018-01-20** - `2.0.0`
   - Moved vouchers related methods to `client.vouchers.*` namespace
   - Moved redemptions related methods to `client.redemptions.*` namespace
@@ -208,7 +222,7 @@ Bug reports and pull requests are welcome through [GitHub Issues](https://github
 [Enable Voucher]: https://docs.voucherify.io/reference?utm_source=github&utm_medium=sdk&utm_campaign=acq#enable-voucher
 [Disable Voucher]: https://docs.voucherify.io/reference?utm_source=github&utm_medium=sdk&utm_campaign=acq#disable-voucher
 
-[Publish Voucher]: https://docs.voucherify.io/reference?utm_source=github&utm_medium=sdk&utm_campaign=acq#publish-voucher
+[Publish Voucher]: https://docs.voucherify.io/reference?utm_source=github&utm_medium=sdk&utm_campaign=acq#create-publication
 
 [Redeem Voucher]: https://docs.voucherify.io/reference?utm_source=github&utm_medium=sdk&utm_campaign=acq#redeem-voucher
 [List Redemptions]: https://docs.voucherify.io/reference?utm_source=github&utm_medium=sdk&utm_campaign=acq#list-redemptions
